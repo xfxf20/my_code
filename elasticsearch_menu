@@ -1,0 +1,81 @@
+#!/usr/bin/evn python
+# -*- coding: utf-8 -*-
+#Edit: turnipsmart.com
+
+import os,sys
+
+running = True
+menu = """
+  Main Menu  
+--------------------
+ 1: start elasticsearch 
+ 2: stop elasticsearch
+ 3: show elasticsearch
+ 4: start kibana
+ 5: stop kibana
+ 6: show kibana
+ q: Quit
+--------------------
+"""
+#register the cmd
+menu_dict={
+      "h": "Please enter the options to be operated.",
+      "1": "df -h",
+      "2": "free -m",
+      "3": "netstat -lnt",
+      "4": "netstat -lnt",
+      "5": "netstat -lnt",
+      "6": "netstat -lnt",
+      }
+ 
+def commands(args):
+    cmd = menu_dict.get(args)
+    return cmd
+ 
+if __name__ == "__main__":
+    os.system('clear')
+    print menu   
+    while running:
+        cmd = raw_input("Input Your Commond:")
+        if cmd != 'q':
+            os.system('clear')
+            try:
+                print menu
+                if commands(cmd) != None:
+                    #fo = os.popen(commands(cmd))
+                    #print fo.read()
+                    if cmd == '1':
+                        print "cmd=1"
+                        #os.system('sh /home/xf/elasticsearch-5.6.6/bin/elasticsearch')
+                        os.chdir('/home/xf/elasticsearch-5.6.6/bin/')
+                        #os.system('./elasticsearch')
+                        os.system('pwd')
+                        os.system('./elasticsearch -d')
+                    elif  cmd == '2':
+                        print "cmd=2"
+                        os.system('ps -ef|grep elasticsearch|grep -v grep|cut -c 9-15|xargs kill -9')
+                        #os.system('ps aux|grep keyword|grep -v grep |awk '{print $1}'|xargs kill -9')
+                    elif  cmd == '3':
+                        print "cmd=3"
+                        os.system('ps -ef|grep elasticsearch|grep -v grep')
+                    elif  cmd == '4':
+                        print "cmd=4"
+                        os.chdir('/home/xf/kibana/bin/')
+                        os.system('nohup ./kibana &')
+                    elif  cmd == '5':
+                        print "cmd=5"
+                        os.system('ps -ef|grep node|grep -v grep|cut -c 9-15|xargs kill -9')
+                    elif  cmd == '6':
+                        print "cmd=6"
+                        os.system('ps -ef|grep node|grep -v grep')
+                    else:
+                        print commands(cmd)
+                else:
+                    print "Input is Wrong!"
+            except Exception,e:
+                print menu
+                print e            
+        else:
+            print 'We will exit the menu.'
+            os.system('clear')
+            sys.exit()
